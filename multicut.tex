@@ -1,0 +1,89 @@
+\section{Multicut}
+\label{sec:multicut}
+
+The multicut problem~\cite{chopra1993partition} (also known as correlation clustering~\cite{demaine2006correlation}) is to cluster graph nodes based on edge preferences.
+
+\begin{definition}[Multicut]
+Given an undirected weighted graph $G=(V,E,c)$ the multicut problem is to find a partition $\Pi = (\Pi_1,\ldots,\Pi_k)$ such that $\Pi_i \cap \Pi_j$ for $i \neq j$ and $\dot{\cup}_{i\in[k]} \Pi_j = V$ where $k$ is computed as part of the optimization process.
+The \emph{cut} $\delta(\Pi_1,\ldots,\Pi_k)$ induced by a decomposition is the subset of those edges that straddle distinct clusters.
+
+The space of all multicuts is denoted as
+\begin{equation}
+  \mathcal{M}_G = \left\{ \delta(V_1,\ldots,V_k) : 
+\begin{array}{c}
+  k \in \N \\
+  % V_i \cap V_j = \varnothing \quad \forall i\neq j\\
+  V_1 \dot\cup \ldots \dot\cup V_k = V
+\end{array} \right\}\,.
+\end{equation} 
+
+The minimum cost multicut problem is
+\begin{equation}
+  \label{eq:multicut}
+  \min_{y \in \mathcal{M}_G} \la c, x \ra\,.
+\end{equation} 
+\end{definition}
+
+A multicut illustration can be seen in Figure~\ref{fig:multicut-illustration}
+
+\begin{figure}[H]
+    \centering
+    \scalebox{0.7}{ \includestandalone{figures/multicut} }
+    \caption{
+    An exemplary multicut on a grid graph.
+    The multicut consists of three partitions induced by the cut edges (red, dashed).
+    }
+    \label{fig:multicut-illustration}
+\end{figure}
+
+\subsection{File Format}
+The multicut problem is given in the text file format as follows:
+
+\begin{fileformat}
+MULTICUT
+(*$i_1$*) (*$j_1$*) (*$c_1$*)
+.
+.
+.
+(*$i_m$*) (*$j_m$*) (*$c_m$*)
+\end{fileformat}
+where $E = \{i_1 j_1, \ldots, i_m j_m\}$ and $c_1,\ldots,c_m$ are the corresponding edge weights.
+
+\subsection{Benchmark datasets}
+
+\subsubsection{CREMI}
+The CREMI-challenge~\cite{cremi} is to group voxels from 3D-volumes of fruit-fly brain matter together whenever they belong to the same neuron.
+The raw image data was acquired by~\cite{zheng2018complete} and converted to multiple multicut instances as detailed below.
+
+\paragraph{Superpixel\footnote{\url{https://keeper.mpdl.mpg.de/f/811b88d4c97644d39ea9/?dl=1}}}
+For converting the data into multicut instances~\cite{pape2017solving} first created super-pixels and then computed affinities between these for estimating probabilities superpixels belong to the same neuron.
+The majority of these instances are different crops of one global problem.
+There are 3 small ($400000-600000$ edges), 3 medium ($4-5$ million edges) and 5 large ($28-650$ million edges) multicut instances.
+
+\paragraph{Raw\footnote{\url{https://keeper.mpdl.mpg.de/f/3916d2da6aa840139206/?dl=1}}}
+Multicut instances are derived directly from the voxel grid without conversion to superpixels.
+For that the three test volumes sample A+, B+ and C+ from~\cite{cremi}.
+Edge weights are computed by~\cite{torch_EM}.
+There are two types of instances:
+(i)~The three full problems where the underlying volumes have size $1250 \times 1250 \times 125$ with around $700$ million edges and
+(ii)~six cropped problems created by halving each volume and creating the corresponding multicut instances each containing almost $340$ million edges.
+
+\subsubsection[Cityscapes Instance Segmentation]{Cityscapes Instance Segmentation\footnote{\url{https://keeper.mpdl.mpg.de/f/80686a004ff84d96aaeb/?dl=1}}}
+
+Unsupervised image segmentation on $59$ high resolution images ($2048 \times 1024$) taken from the validation set~\cite{cordts2016cityscapes}.
+Conversion to multicut instances is done by computing the edge affinities produced by~\cite{abbas2021combinatorial} on a grid graph with $4$-connectivity and additional coarsely sampled longer range edges.
+Each instance contains approximately $2$ million nodes and $9$ million edges. 
+
+\subsection{Algorithms}
+\begin{description}
+\item[CGC~\cite{beier2014cut}:] Cut, Glue \& Cut, a heuristic that alternatingly bipartitions the graph and exchanges nodes in pairs of clusters via max-cut computed by a reduction to perfect matching.
+\item[Fusion Moves~\cite{beier2017multicut}:] Explore subspaces of multicuts generated randomly via solving it with ILP-solvers.
+\item[GAEC \& KLj~\cite{keuper2015efficient}:] The greedy additive edge contraction (GAEC) iteratively takes the most attractive edge and contract it until no attractive edge is present.
+Kernighan \& Lin with joins (KLj) computes sequences of node exchanges between clusters and cluster joins that improve the objective.
+\item[Balanced Edge Contraction~\cite{kardoost2018solving}:] Like GAEC but additionally preferring edges with endpoints that contain less original nodes.
+\item[Greedy Edge Fixation~\cite{levinkov2019comparative}:] Like GAEC but additionally prevent contractions on certain edges.
+\item[RAMA~\cite{abbas2021combinatorial}:] Primal/dual algorithm using parallel edge contraction and fast separation/message passing for computing lower bounds and reduced costs.
+\item[Message Passing~\cite{swoboda2017message}:] Sequential separation/message passing.
+\item[Cycle Packing \& Persistency~\cite{lange2018partial}:] Fast cycle separation with interleaved greedy cycle packing for obtaining dual lower bounds. Simple persistency criteria for fixing variables to optimal values without optimizing the whole problem.
+\item[Combinatorial Persistency Criteria~\cite{lange2019combinatorial}:] A number of persistency criteria for fixing variable to their optimal values ranging from easy enumerative to more involved ones which require optimization of larger subproblems.
+\end{description}

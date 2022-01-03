@@ -1,0 +1,31 @@
+\section{Bottleneck Markov Random Fields}
+The bottleneck Markov Random Field problem is an extension of the ordinary Markov Random Field inference problem from Section~\ref{sec:mrf}.
+The ordinary MRF problem is an optimization w.r.t.\ the $(\min,+)$-semiring (i.e.\ we minimize over a sum of potentials), while the inference over bottleneck MRFs is additional an optimization w.r.t.\ the $(\min,\max)$-semiring (i.e.\ we also optimize over the maximum assignment of all potentials).
+
+\begin{definition}[Bottleneck MRF]
+\label{def:bottleneck-mrf}
+Given an MRF $(V,E,\mathcal{L},\theta)$ (see Defintion~\ref{def:mrf}) and additional bottleneck potentials $\psi_v : \mathcal{L}_v \rightarrow \R$ for $v \in V$ and $\psi_{uv} : \mathcal{L}_u \times \mathcal{L}_v \rightarrow \R$ for $uv \in E$, the bottleneck MRF inference problem is
+\begin{multline}
+\min_{x \in \mathcal{L}}  \sum_{v \in V} \theta_v(x_v) + \sum_{uv \in E} \theta_{uv}(x_u,x_v) + \\ \min\{\max_{v \in V} \psi(x_v), \max_{uv \in E} \psi_{uv}(x_u,x_v) \}
+\end{multline}
+\end{definition}
+
+\subsection{File Format}
+The file format is an extension of the uai file format proposed for MRFs in Section~\ref{sec:mrf-file-format}.
+
+\begin{fileformat}
+MARKOV
+(*$\theta \text{ potentials in uai format as in Section~\ref{sec:mrf-file-format}}$*)
+
+MAX-POTENTIALS
+(*$\psi \text{ potentials in uai format as in Section~\ref{sec:mrf-file-format}}$*)
+\end{fileformat}
+What follows after MARKOV is the ordinary MRF part describing $\theta$ potentials in Definition~\ref{def:bottleneck-mrf} and what follows after MAX-POTENTIALS are the $\psi$ potentials for the bottleneck part in Definition~\ref{def:bottleneck-mrf}.
+
+\subsection{Datasets}
+\subsubsection{Horizon Tracking}
+
+\subsection{Algorithms}
+\begin{description}[style=unboxed]
+\item[Lagrange Decomposition \& Subgradient Ascent~\cite{abbas2019bottleneck}:] Combinatorial subproblems for ordinary tree MRFs and bottleneck chain MRFs joined via Lagrange multipliers and optimized via subgradient ascent.
+\end{description}

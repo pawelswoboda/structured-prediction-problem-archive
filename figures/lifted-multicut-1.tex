@@ -1,0 +1,39 @@
+\documentclass[crop]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{decorations}
+\usepackage{xcolor}
+
+\begin{document}
+\definecolor{mycolor1}{HTML}{009900}
+\tikzstyle{cut-edge}=[red,dashed,thick]
+\tikzstyle{vertex}=[circle, draw, fill=white, inner sep=0pt, minimum width=1ex]
+\tikzset{every picture/.append style={baseline,scale=1.1}}
+\begin{tikzpicture}[scale=1.5
+    ,label/.style={%
+   postaction={ decorate,
+   decoration={ markings, mark=at position .4 with \node #1;}}}
+    ]
+% multicut
+\draw[draw=mycolor1!30, line width=10pt] plot[smooth, tension=0.9] coordinates {(0,1) (0.5,1.5) (2.25,1.5) (2.5,0.5) (2,0)};
+\draw[draw=mycolor1!30, fill=mycolor1!30] plot[smooth cycle, tension=0.9] coordinates {(-0.15,0) (0,-0.15) (0.15,0) (0,0.15)};
+\draw[draw=mycolor1!30, fill=mycolor1!30] plot[smooth cycle, tension=0.9] coordinates {(1-0.15,0) (1+0,-0.15) (1+0.15,0) (1+0,0.15)};
+\draw[draw=mycolor1!30, fill=mycolor1!30] plot[smooth cycle, tension=0.9] coordinates {(1-0.15,1+0) (1+0,1-0.15) (1+0.15,1+0) (1+0,1+0.15)};
+\draw[draw=mycolor1!30, fill=mycolor1!30] plot[smooth cycle, tension=0.9] coordinates {(2-0.15,1+0) (2+0,1-0.15) (2+0.15,1+0) (2+0,1+0.15)};
+
+\draw[style=cut-edge] (0, 0) -- (1, 0) node[midway,below] {-1.0};
+\draw[style=cut-edge] (1, 0) -- (2, 0) node[midway,below] {-1.0};
+\draw[style=cut-edge] (0, 1) -- (1, 1) node[midway,above] {-0.5};
+\draw[style=cut-edge] (1, 1) -- (2, 1) node[midway,above] {-0.5};
+\draw[style=cut-edge] (0, 0) -- (0, 1) node[midway,left] {-1.0};
+\draw[style=cut-edge] (1, 0) -- (1, 1) node[midway,left] {-1.0};
+\draw[style=cut-edge] (2, 0) -- (2, 1) node[midway,left] {-0.5};
+\draw[label={[above]{$5$}}] plot[smooth,tension=0.9] coordinates {(0,1) (0.5,1.5) (2.25,1.5) (2.5,0.5) (2,0)};
+
+\node[style=vertex] at (0, 0) {};
+\node[style=vertex] at (1, 0) {};
+\node[style=vertex] at (2, 0) {};
+\node[style=vertex] at (0, 1) {};
+\node[style=vertex] at (1, 1) {};
+\node[style=vertex] at (2, 1) {};
+\end{tikzpicture}
+\end{document}

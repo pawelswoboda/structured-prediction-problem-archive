@@ -1,0 +1,133 @@
+\documentclass[twocolumn]{article}
+\usepackage{geometry}
+\geometry{a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+}
+%\usepackage{multicol}
+\usepackage{float}
+\usepackage[utf8]{inputenc} 
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{listings} %code extracts
+\usepackage{xcolor}
+\usepackage{mdframed} %nice frames
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{math}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.markings}
+%\usetikzlibrary{external}
+%\tikzexternalize
+%\usepackage[subpreambles=true]{standalone}
+\usepackage{standalone}
+\usepackage[stable]{footmisc}
+
+\definecolor{solColor}{rgb}{1,0.5,0}
+\definecolor{otherColor}{gray}{0.7}
+% for file format listing
+\definecolor{light-gray}{gray}{0.95} %the shade of grey that stack exchange uses for file format listings
+\lstnewenvironment{fileformat}
+{
+\lstset{
+escapeinside={(*}{*)},
+backgroundcolor=\color{light-gray}
+}
+}
+{
+\endquote
+}
+\BeforeBeginEnvironment{fileformat}{
+\begin{mdframed}[backgroundcolor=light-gray, roundcorner=10pt,leftmargin=1, rightmargin=1, innerleftmargin=15, innertopmargin=15,innerbottommargin=15, outerlinewidth=1, linecolor=light-gray]
+}
+\AfterEndEnvironment{fileformat}{
+\end{mdframed} 
+}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{conc}[theorem]{Conclusion}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{example}{Example}
+
+\DeclareMathOperator{\argmin}{argmin}
+\DeclareMathOperator{\argmax}{argmax}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+
+
+\title{Structured Prediction Problem Archive}
+
+\author{Paul Swoboda, Andrea Hornakova, Paul R\"otzer, Ahmed Abbas}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Structured prediction problems are one of the fundamental tools in machine learning.
+In order to facilitate algorithm development for their numerical solution, we collect in one place a large number of datasets in easy to read formats for a diverse set of problem classes.
+We provide archival links to datasets, description of the considered problems and problem formats, and a short summary of problem characteristics including size, number of instances etc.
+For reference we also give a non-exhaustive selection of algorithms proposed in the literature for their solution.
+We hope that this central repository will make benchmarking and comparison to established works easier.
+    We welcome submission of interesting new datasets and algorithms for inclusion in our archive\footnote{Corresponding email address \href{mailto:pswoboda@mpi-inf.mpg.de}{pswoboda@mpi-inf.mpg.de}}.
+\end{abstract}
+
+\tableofcontents
+
+\clearpage
+
+%\begin{multicols*}{2}
+
+\input{introduction}
+\clearpage
+\input{mrf}
+\clearpage
+\input{multicut}
+\clearpage
+\input{lifted-multicut}
+\clearpage
+\input{asymmetric-multiway-cut}
+\clearpage
+\input{lifted-disjoint-paths}
+\clearpage
+\input{graph-matching}
+\clearpage
+\input{multi-graph-matching}
+\clearpage
+\input{cell-tracking}
+\clearpage
+\input{shape-matching}
+\clearpage
+\input{discrete-tomography}
+\clearpage
+\input{bottleneck-mrf}
+\clearpage
+
+
+{\small
+\bibliographystyle{alpha}
+\bibliography{literature}
+} 
+
+%\end{multicols*}
+
+\end{document}

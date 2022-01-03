@@ -1,0 +1,161 @@
+\section{Markov Random Fields}
+\label{sec:mrf}
+Markov Random Fields (MRF) are a basic model for obtaining structured probability distributions that factorize according to a graph.
+Finding the most probable configuration is called maximum-a-posteriori inference or MAP-MRF for short.
+Here we consider only discrete MRFs, i.e.\ random variables of the MRF can only take a finite number of values.
+MAP-MRF for discrete MRFs can be cast as an ILP~\cite{werner2007linear}.
+
+
+\begin{definition}[MRF]
+    \label{def:mrf}
+Let an undirected graph $G=(V,E)$, label spaces $\mathcal{L}_v = \{0,1,\ldots, \abs{\mathcal{L}_v}-1\}$ for each variable $v \in V$ and $\mathcal{L} = \prod_{v \in V} \mathcal{L}_v$ and 
+unary potentials $\phi_v : \mathcal{L}_v \rightarrow \R$, $v \in V$ as well as pairwise potentials
+$\phi_{uv} : \mathcal{L}_u \times \mathcal{L}_v \rightarrow \R$, $uv \in E$ be given.
+The probability distribution defined by an MRF $(V,E,\mathcal{L},\phi)$ is given by
+\begin{equation}
+\mathbb{P}_{\phi}(x) = \frac{\prod_{v \in V} \phi_v(x_v) \cdot \prod_{uv \in E} \phi_{uv}(x_u,x_v)}{ \underbrace{\sum_{x \in \mathcal{L}} \prod_{v \in V} \phi_v(x_v) \cdot \prod_{uv \in E} \phi_{uv}(x_u,x_v)}_{ := Z } } \,.
+\end{equation}
+The normalization constant $Z$ is called the partition function.
+\end{definition}
+
+\begin{definition}[MAP]
+The maximum-a-posteriori element is defined as
+\begin{equation}
+\label{eq:map-mrf}
+x^* \in \argmax_{x \in \mathcal{L}} \mathbb{P}(x)\,.
+\end{equation}
+After taking negative logarithms $\theta_v = - \log(\phi_v)$ $\forall v \in V$ and $\theta_{uv} = -\log(\phi_{uv})$ $\forall uv \in E$ the MAP problem~\eqref{eq:map-mrf} can be written as
+\begin{equation}
+\min_{x \in \mathcal{L}} = \sum_{v \in V} \theta_v(x_v) + \sum_{uv \in E} \theta_{uv}(x_u,x_v) \,.
+\end{equation}
+\end{definition}
+
+\begin{figure}[H]
+    \centering
+    \includestandalone[width=0.6\columnwidth]{figures/grid-mrf}
+    \caption{
+    An exemplary 3-label MRF on a grid graph.
+    A selected solution is indicated by the orange nodes and edges.
+    }
+    \label{fig:mrf-illustration}
+\end{figure}
+
+For an illustration of an exemplary MRF see Figure~\ref{fig:mrf-illustration}.
+
+\subsection{File Format}
+\label{sec:mrf-file-format}
+We use an extension of the UAI file format~\url{https://www.cs.huji.ac.il/project/PASCAL/fileFormat.php}.
+
+{
+\small
+\begin{fileformat}
+MARKOV
+(*$\abs{V}$*)
+(*$\abs{\mathcal{L}_1}$*) ... (*$\abs{\mathcal{L}_{\abs{V}}}$*) 
+(*$\abs{V} + \abs{E}$*)
+1 1
+.
+.
+.
+1 (*$\abs{V}$*) 
+2 (*$i_1$*) (*$j_1$*) 
+.
+.
+.
+2 (*$i_{\abs{E}}$*) (*$j_{\abs{E}}$*) 
+
+(*$\abs{\mathcal{L}_1}$*) 
+(*$\theta_1(0)$*) ... (*$\theta_1(\abs{\mathcal{L}_1}-1)$*)
+.
+.
+.
+(*$\abs{\mathcal{L}_{\abs{V}}}$*)
+(*$\theta_{\abs{V}}(0)$*) ... (*$\theta_{\abs{V}}(\abs{\mathcal{L}_{\abs{V}}}-1)$*)
+
+(*$\abs{\mathcal{L}_{i_1}} \cdot \abs{\mathcal{L}_{j_1}} $*) 
+(*$\theta_{i_1 j_1}(0,0)$*) (*$\theta_{i_1 j_1}(0,1)$*) ... (*$\theta_{i_1 j_1}(\abs{\mathcal{L}_{i_1}}, \abs{\mathcal{L}_{j_1}})$*)
+.
+.
+.
+(*$\abs{\mathcal{L}_{i_{\abs{E}}}} \cdot \abs{\mathcal{L}_{j_{\abs{E}}}} $*) 
+(*$\theta_{i_{\abs{E}} j_{\abs{E}}}(0,0)$*) ... (*$\theta_{i_{\abs{E}} j_{\abs{E}}}(\abs{\mathcal{L}_{i_{\abs{E}}}}, \abs{\mathcal{L}_{j_{\abs{E}}}})$*)
+\end{fileformat}
+}
+The file is structured as follows:
+First comes the preamble (MARKOV, line 1),
+then the number of variables ($\abs{V}$, line 2),
+then the number of labels for each variable in order,
+then the number of unary and pairwise potentials.
+Next come the index lines:
+for each unary and pairwise potential the number of nodes (1 for variables, 2 for edges) followed by the variable indices.
+Last come function tables in the order given by the index lines.
+Each function table gives the number of entries in the function table $\abs{\mathcal{L}_i}$ for variables $i$ and $\abs{\mathcal{L}_i} \cdot \abs{\mathcal{L}_j}$ for edge $ij$ followed by the values of the corresponding potentials $\theta_i$ or $\theta_{ij}$ respectively.
+
+Additionally we provide LP-files for all datasets using the local polytope relaxation~\cite{werner2007linear} for general pairwise potentials and a compactified one equivalent to the local polytope for Potts potentials.
+
+\subsection{Datasets}
+The below datasets object-seg, color-seg, color-seg-n4, color-seg-n8 and protein-folding are part of the OpenGM benchmark~\cite{kappes2015comparative}.
+These datasets are additionally given in the OpenGM hdf5 format.
+
+\subsubsection[object-seg]{object-seg\footnote{\url{https://keeper.mpdl.mpg.de/f/716a0a8621f44d0ba9be/?dl=1}}}
+Segmentation of objects in 3 images of size up to 424720 with up to 4 semantic classes and Potts pairwise potentials on an 8-neighborhood.
+
+\subsubsection[color-seg]{color-seg\footnote{\url{https://keeper.mpdl.mpg.de/f/cdcae8287a36403e9ecd/?dl=1}}}
+Image segmentation with up to 424720 nodes on an 8-neigborhood with up to 4 labels. 
+Pairwise potentials are of Potts type.
+Instances are originally from~\cite{alahari2009dynamic}.
+
+\subsubsection[color-seg-n4]{color-seg-n4\footnote{\url{https://keeper.mpdl.mpg.de/f/76b5ea50eba24c1d9111/?dl=1}}}
+Image segmentation of up to 76800 nodes on a 4-neighborhood with up to 12 labels. 
+Pairwise potentials are of Potts type.
+Instances are originally from~\cite{lellmann2011continuous}.
+
+\subsubsection[color-seg-n8]{color-seg-n8\footnote{\url{https://keeper.mpdl.mpg.de/f/0077922f8e054fee8860/?dl=1}}}
+Image segmentation of up to 76800 nodes on a 8-neighborhood with up to 12 labels. 
+Pairwise potentials are of Potts type.
+Instances are originally from~\cite{lellmann2011continuous}.
+
+\subsubsection[protein-folding]{protein-folding\footnote{\url{https://keeper.mpdl.mpg.de/f/927e7cfa31fa4cd9bcd4/?dl=1}}}
+29 instances of moderate size with sparse and full connectivity and pairwise potentials of general type.
+Instances are originally from~\cite{jaimovich2006towards,elidan2011probabilistic}.
+
+
+
+
+\subsection{Algorithms}
+\begin{description}[style=unboxed]
+\item[OpenGM~\cite{kappes2015comparative}:] Library of $\sim$ 50 different algorithms for inference in MRFs.
+\item[Tree-reweigthed sequential message passing (TRW-S)~\cite{kolmogorov2005convergent}:] Decompose the graph into chains and sequentially visit nodes and perform min-marginal averaging reusing previous computations. A lower bound is monotonically increasing. Rounding is performed by sequentially fixing visited variables to their locally best label.
+\item[Sequential Reweighted Message Passing Revisited (SRMP)~\cite{kolmogorov2014new}:] Extension of TRW-S~\cite{kolmogorov2005convergent} to higher order MRFs.
+\item[Boykov-Kolmogorov max-flow~\cite{boykov2004experimental}:] Convert $2$-label MRFs with submodular potentials to max-flow problems and solve them with an efficient combinatorial max-flow solver.
+\item[Quadratic Binary Program Optimization (QPBO)~\cite{kolmogorov2007minimizing}:] Convert arbitrary $2$-label MRFs to an extended maximum flow problem and solve the resulting relaxation with~\cite{boykov2004experimental}.
+\item[Quadratic Binary Program Optimization Improved (QPBOi)~\cite{rother2007optimizing}:] Extension of QPBO~\cite{kolmogorov2007minimizing} to allow for probing variables and fixing them even if QPBO cannot determine its value.
+\item[$\alpha$-expansion~\cite{boykov2001fast}:] Given a multi-label Potts MRF fix a label and compute best move that can pick the fixed label via reduction to maximum-flow. Iterate over all labels until convergence.
+\item[Local Submodular Approximation (LSA)~\cite{gorelick2014submodularization}:] Local submodular approximation of the binary MRF energies solved iteratively with max-flow.
+\item[MQPBO~\cite{kohli2008partial}:] Transformation of ordered multi-label MRFs to an extended binary MRF.
+\item[Max-Product Message Passing (MPLP)~\cite{globerson2007fixing}:] Message passing on a decomposition into edge subproblems.
+\item[Subproblem Tree Calibration~\cite{wang2013subproblem}:] A unified view of message passing on different subproblems.
+\item[Reduction to Perfect Matching~\cite{schraudolph2010polynomial}:] Solve planar binary pairwise MRFs with unary potentials only on the outer boundary exactly by transforming to minimum cost perfect matching. For arbitrary planar binary MRFs transform to minimum cost perfect matching with additional Lagrange multipliers.
+\item[Planar Cycle Covering Graphs~\cite{yarkony2011planar}:] Improved transformation of planar binary MRFs to perfect matching with additional Lagrange multipliers.
+\item[Tree Block Coordinate Ascent~\cite{sontag2009tree}:] Decompose MRF into tree subproblems and compute Lagrange multiplier updates for full trees simultaneously.
+\item[Minorant Averaging~\cite{shekhovtsov2016solving}:] Iteratively compute minorants of chain subproblems in parallel on GPU and average them.
+\item[MPLP++~\cite{tourani2018mplp++}:] Modification of the MPLP~\cite{globerson2007fixing} with more effective update steps leading to fast convergence for dense subproblems.
+\item[SPAM~\cite{tourani2020taxonomy}:] Adaptive subproblem construction and large update steps leading to fast convergence for arbitrary graph structures.
+\item[Adaptive Diminishing Smoothing~\cite{savchynskyy2012efficient}:] Solve smoothed dual of local polytope relaxation with an adaptively chosen smoothing parameter.
+\item[Frustrated Cycle Search~\cite{sontag2012efficiently}:] Tighten the relaxation used in MPLP~\cite{globerson2007fixing} with triplet potentials coming from violated cycle inequalities.
+\item[Augmenting DAG~\cite{werner2007linear}:] Find sequences of message passing operations that will increase lower bound along so-called augmenting directed acyclic subgraphs.
+\item[CombiLP~\cite{savchynskyy2013global}:] Splitting MRF into easy/hard part and solving the easy one with efficient TRWS~\cite{kolmogorov2005convergent} and the hard one with an ILP solver and recombining the respective solutions into a globally optimal one.
+\item[Dense CombiLP~\cite{haller2018exact}:] Extension of CombiLP with better splitting criterion into easy/hard part resulting in an easier hard part. 
+\item[Subgradient on Dual Decomposition~\cite{komodakis2007mrf}:] Lagrange decomposition into trees optimized with subgradient ascent.
+\item[Bundle Method~\cite{kappes2012bundle}:] Bundle method optimizing a Lagrange decomposition into trees.
+\item[Frank-Wolfe Bundle Method~\cite{swoboda2019map}:] Lagrange decomposition into minimal number of tree subproblems solved with a bundle method using the Frank-Wolfe algorithm.
+\item[Iterated Conditional Modes (ICM)~\cite{besag1986statistical}:] Iteratively improve the labeling of a single variable and keep the others fixed.
+\item[Lazy Flipper~\cite{andres2012lazy}:] ICM~\cite{besag1986statistical} extension for flipping assignments of $k$ variables at a time efficiently.
+\item[Nesterov's scheme~\cite{savchynskyy2011study}:] Nesterov's fast gradient based algorithm on a smoothed approximate of the Lagrange dual.
+\item[Primal-Dual~\cite{schmidt2011evaluation}:] A first order primal-dual algorithm optimizing the local polytope relaxation.
+\item[Dead End Elimination (DEE) Persistency~\cite{desmet1992dead}:] Compute for every variable assignment whether changing the assignment to some other label always improves the energy. If so, elimiate variable/label assignment.
+\item[Kovtun's persistency criterion~\cite{desmet1992dead}:] Solve auxiliary max-flow subproblems to compute certificates whether variable assignments are optimal.
+\item[Improving Mapping Persistency~\cite{shekhovtsov2014maximum,shekhovtsov2015maximum,shekhovtsov2016higher}:] Find optimal variable assignments by constructing improving mapping that fixes optimal variabl assignments.
+\item[Iterative Pruning Persistency~\cite{swoboda2013partial,swoboda2014partial}:] Iteratively shrink the MRF by removing nodes where persistency cannot be proved and modify the rest problem with boundary terms coming from the deleted variables.
+\end{description}
+

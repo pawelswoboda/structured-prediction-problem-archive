@@ -1,0 +1,85 @@
+\section{Lifted Multicut}
+\label{sec:lifted-multicut}
+
+The lifted multicut problem~\cite{keuper2015efficient} is an extension of the multicut graph clustering problem to allow for connectivity priors.
+
+\begin{definition}[Lifted Multicut]
+Given two undirected weighted graphs $G=(V,E,c)$ and $G'=(V,E',c')$  called the base and lifted graph respectively the lifted multicut problem is to find a partition $\Pi = (\Pi_1,\ldots,\Pi_k)$ such that $\Pi_i \cap \Pi_j$ for $i \neq j$ and $\dot{\cup}_{i\in[k]} \Pi_j = V$ and \emph{each $\Pi_i$ is connected w.r.t. to the base graph $G$} where $k$ is computed as part of the optimization process.
+The \emph{base cut} $y=\delta_G(\Pi_1,\ldots,\Pi_k)$, and \emph{lifted cut} $y' = \delta_{G'}(\Pi_1,\ldots,\Pi_k)$ induced by a decomposition is the subset of those base and lifted edges that straddle distinct clusters.
+
+The space of all lifted multicuts is denoted as
+\begin{equation}
+  \mathcal{M'}_{G,G'} = \left\{ \begin{array}{c}\delta_G(V_1,\ldots,V_k)\\ \delta_{G'}(V_1,\ldots,V_k) \end{array} : 
+\begin{array}{c}
+  k \in \N \\
+  V_1 \dot\cup \ldots \dot\cup V_k = V\\
+  V_i \text{ connected in } G
+\end{array} \right\}%\,.
+\end{equation} 
+
+The lifted minimum cost multicut problem is
+\begin{equation}
+  \label{eq:lifted-multicut}
+  \min_{(y,y') \in \mathcal{M'}_{G,G'}} \la c, y \ra + \la c', y' \ra\,.
+\end{equation} 
+\end{definition}
+
+The difference between multicut and lifted multicut is illustrated in Figure~\ref{fig:lifted-multicut}.
+
+\begin{figure}[H]
+    \begin{subfigure}{0.49\columnwidth}
+    \begin{center}
+        \includestandalone[width=\textwidth]{figures/lifted-multicut-1}
+    \end{center}
+        \caption{Multicut}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\columnwidth}
+    \begin{center}
+        \includestandalone[width=\textwidth]{figures/lifted-multicut-2}
+    \end{center}
+        \caption{Lifted Multicut. The base graph $G$ contains the grid edges.}
+    \end{subfigure}
+        \caption{
+            Illustration of difference between multicut and lifted multicut.
+            Dashed edges indicate cuts and solid intra-cluster ones.
+            The lifted edge right forces the endpoints to be connected w.r.t.\ the base graph.
+        }
+        \label{fig:lifted-multicut}
+\end{figure}
+    
+\subsection{File Format}
+The lifted multicut problem is given in the text file format as follows:
+
+\begin{fileformat}
+LIFTED MULTICUT
+BASE EDGES
+(*$i_1$*) (*$j_1$*) (*$c_1$*)
+.
+.
+.
+(*$i_m$*) (*$j_m$*) (*$c_m$*)
+LIFTED EDGES
+(*$i'_1$*) (*$j'_1$*) (*$c'_1$*)
+.
+.
+.
+(*$i'_m$*) (*$j'_m$*) (*$c'_m$*) 
+\end{fileformat}
+where $E = \{i_1 j_1, \ldots, i_m j_m\}$ and $c_1,\ldots,c_m$ are the corresponding edge weights and
+where $E' = \{i'_1 j'_1, \ldots, i'_m j'_m\}$ and $c'_1,\ldots,c'_m$ are the corresponding lifted edge weights.
+
+\subsection{Datasets}
+
+\subsubsection{Multi-Camera Multi Object Tracking}
+\paragraph{Wildtrack}
+\paragraph{Campus}
+\paragraph{PETS-09}
+
+\subsection{Algorithms}
+\begin{description}
+\item[GAEC\&KLj~\cite{keuper2015efficient}:] Greedy additive edge constraction (GAEC) and Kernighan \& Lin with joins (KLj) are extensions of the corresponding multicut algorithms to lifted multicut.
+\item[Fusion Moves~\cite{beier2017multicut}:] Explore subspaces of lifted multicuts generated randomly via solving it with ILP-solvers.
+\item[Balanced Edge Contraction~\cite{kardoost2018solving}:] BEC is an extension of the corresponding algorithm for multicut.
+\item[Greedy Edge Fixation~\cite{levinkov2019comparative}:] GEF extension to lifted multicut.
+\end{description}

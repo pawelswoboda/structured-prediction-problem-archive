@@ -1,0 +1,70 @@
+\section{Structured Prediction}
+Structured prediction is the task to predict structured solutions, which, in the following, will mean vectors that are subject to a number of constraints.
+In particular, we restrict ourselves to integer linear programs, where all variables are binary subject to a number of constraints which commonly can be written as linear (in-)equalities, see Section~\ref{sec:ilp} below.
+Due to the constraint structure finding even a feasible solution can be NP-hard. 
+But even if the constraint structure admits easy construction of solutions, finding the best one w.r.t.\ an objective (often called energy in the literature) is typically NP-hard.
+This and the large problem sizes typically occurring in machine learning and computer vision make structured prediction an interesting and difficult algorithmic challenge.
+
+Over the years a large body of research has been devoted to efficient and scalable approximative and also optimal solvers for special subclasses of problems.
+Somewhat less attention has been paid to generic, that is problem agnostic solvers.
+In order to assess the empirical performance, datasets of instances in various problem classes have been  used.
+It is the goal of the Structured Prediction Problem Archive to present and preserve interesting datasets coming from a large number of different problem classes together with references to algorithms which were proposed for their solution.
+Unfortunately, in many previous works experiments were done on differing subsets of datasets, making comparison across different algorithms harder than it should be.
+Similar projects have been pursued for Markov Random Fields~\cite{kappes2015comparative,szeliski2008comparative} with additional algorithm evaluations.
+
+We hope that our project will make empirical testing of algorithms easier.
+Our work provides a single point of reference from which problem instances can be obtained.
+We hope that this will encourage algorithm testing on large corpora of instances.
+
+\subsection{Integer Linear Programs}
+\label{sec:ilp}
+All structured prediction problems we collect can be written as integer linear programs (ILP).
+An ILP is a linear minimization problem over integral variables that are subject to a number of linear constraints.
+We constrain ourselves to $\{0,1\}$-valued variables.
+Given an objective vector $c \in \R^n$, a constraint matrix $A \in \R^{n \times m}$ and a constraint right hand side $b \in \R^m$ we can write an ILP as
+
+\begin{equation}
+    \tag{ILP}
+    \begin{array}{rl}
+    \min_{x \in \{0,1\}^n}
+    & \sum_{i\in[n]} c_i x_i \\
+    \text{s.t.}
+    & Ax \leq b \\
+    \end{array}
+\end{equation}
+For greater flexibility we allow also equality constraints, i.e.\  $Ax = b$ or a mixture of inequalities and equalities.
+
+\subsection{ILP File Format}
+\label{sec:ilp-file-format}
+Whenever applicable, e.g.\ when the number of constraints can be polynomially bounded, we store the problems in an LP file format that standard ILP solvers can read.
+The format is structured as follows:
+
+{\small
+\begin{fileformat}
+Minimize
+(*$\sum\limits_i c_i var_i$*)
+Subject to
+ineq_id(*${}_1$*): (*$\sum\limits_{i}$*) (*$a_{1i} var_{i}$*)  (*$\{\leq|\geq|=\}$*) (*$b_1$*)
+.
+.
+.
+ineq_id(*${}_m$*): (*$\sum\limits_{i}$*) (*$a_{mi} var_{i}$*)  (*$\{\leq|\geq|=\}$*) (*$b_m$*)
+Bounds
+Binaries
+(*$var_1$*)
+.
+.
+.
+(*$var_n$*)
+End
+\end{fileformat}
+}
+
+\subsection{Algorithms}
+\begin{description}[style=unboxed]
+\item[CPLEX~\cite{cplex}:] Classic leading ILP solver from IBM.
+\item[Gurobi~\cite{gurobi}:] Newer leading ILP solver.
+\item[BDD Min-Marginal Averaging~\cite{lange2021efficient}:]
+Decompose ILPs into subproblems represented by binary decision diagrams. Solve the resulting Lagrange decomposition by a sequential min-marginal averaging or with a parallel extension.
+\item[Fast Discrete Optimization on GPU (FastDOG)~\cite{abbas2021fastdog}:] Extension of the BDD min-marginal averaging to a massively parallel GPU solver.
+\end{description}
