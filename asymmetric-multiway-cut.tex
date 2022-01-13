@@ -2,7 +2,7 @@
 The asymmetric multiway cut proposed in~\cite{kroeger2014asymmetric} is an extension of the multiway cut problem that allows for intra-class splits.
 
 \begin{definition}[Asymmetric Multiway Cut]
-Given an unweighted graph $G=(V,E,c_E)$, $K$ classes, $P \subset [K]$ partitionable classes and node costs $c_V : [K]^V \rightarrow \R$ the asymmetric multiway cut problem is
+Given a weighted graph $G=(V,E,c_E)$, $K$ classes, $P \subset [K]$ partitionable classes and node costs $c_V : [K]^V \rightarrow \R$ the asymmetric multiway cut problem is
 \begin{equation}
     \begin{array}{rl}
     \min\limits_{\substack{x \in V \rightarrow [K]\\ y \in \mathcal{M}_G}}
@@ -20,7 +20,7 @@ An illustration of asymmetric multiway cut is given in Figure~\ref{fig:asymmetri
     \begin{center}
         \includegraphics[width=0.5\columnwidth]{figures/asymmetric-multiway-cut.tex}
     \end{center}
-    \caption{Illustration of an asymmetric multiway cut with 4 classes and with class 3 having internal boundaries producing three clusters $3a$, $3b$ and $3c$.}
+    \caption{Illustration of an asymmetric multiway cut with 4 classes and with class 3 having internal boundaries producing three clusters $3_A$, $3_B$ and $3_C$.}
     \label{fig:asymmetric-multiway-cut}
 \end{figure}
 
@@ -54,13 +54,13 @@ $E = \{i_1 j_1,\ldots,i_{\abs{E}} j_{\abs{E}}\}$.
 In~\cite{abbas2021combinatorial} the asymmetric multiway cut solver was used for panoptic segmentation on the following two datasets.
 
 \paragraph{CityScapes}
-Contains traffic related images of resolution $1024 \times 2048$\footnote{\url{https://keeper.mpdl.mpg.de/f/63bfbea779d042a59a4d/?dl=1}} and $4 \times$ downsampled ones at resolution $256 \times 512$\footnote{\url{https://keeper.mpdl.mpg.de/f/956f3e74320a432295d9/?dl=1}}.
-Images contain 21 classes, divided into 8 `thing' and 11 `stuff' classes.
-$100$ easy and $100$ hard to segment images from the validation set where chosen for the benchmark. 
+Contains traffic related images from~\cite{cordts2016cityscapes} of resolution $1024 \times 2048$\footnote{\url{https://keeper.mpdl.mpg.de/f/63bfbea779d042a59a4d/?dl=1}} and $4 \times$ downsampled ones at resolution $256 \times 512$\footnote{\url{https://keeper.mpdl.mpg.de/f/956f3e74320a432295d9/?dl=1}}.
+Images contain $21$ classes, divided into $8$ \lq thing\rq\ and $11$ \lq stuff\rq\ classes.
+$100$ easy and $100$ hard to segment images from the validation set were chosen for the benchmark. 
 
 \paragraph{COCO}
-Contains diverse images of resolution $640 \times 280$\footnote{\url{https://keeper.mpdl.mpg.de/f/25852c04694047ce8e70/?dl=1}} and $4 \times$ downsampled to $... \times ...$\footnote{\url{https://keeper.mpdl.mpg.de/f/dcdb2b8dc2f34b21a9bf/?dl=1}} with $133$ classes divided into $80$ `thing' and $53$ `stuff' classes.
-$100$ easy and $100$ hard to segment images from the validation set where chosen for the benchmark. 
+Contains diverse images from~\cite{lin2014microsoft} of resolution $640 \times 480$\footnote{\url{https://keeper.mpdl.mpg.de/f/25852c04694047ce8e70/?dl=1}} and $4 \times$ downsampled to $160 \times 120$\footnote{\url{https://keeper.mpdl.mpg.de/f/dcdb2b8dc2f34b21a9bf/?dl=1}} with $133$ classes divided into $80$ \lq thing\rq\ and $53$ \lq stuff\rq\ classes.
+$100$ easy and $100$ hard to segment images from the validation set were chosen for the benchmark. 
 
 \subsection{Algorithms}
 \begin{description}
