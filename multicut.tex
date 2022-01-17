@@ -4,7 +4,7 @@
 The multicut problem~\cite{chopra1993partition} (also known as correlation clustering~\cite{demaine2006correlation}) is to cluster graph nodes based on edge preferences.
 
 \begin{definition}[Multicut]
-Given an undirected weighted graph $G=(V,E,c)$ the multicut problem is to find a partition $\Pi = (\Pi_1,\ldots,\Pi_k)$ such that $\Pi_i \cap \Pi_j$ for $i \neq j$ and $\dot{\cup}_{i\in[k]} \Pi_j = V$ where $k$ is computed as part of the optimization process.
+Given an undirected weighted graph $G=(V,E,c)$ the multicut problem is to find a partition $\Pi = (\Pi_1,\ldots,\Pi_k)$ such that $\Pi_i \cap \Pi_j = \varnothing$ for $i \neq j$ and $\dot{\cup}_{i\in[k]} \Pi_j = V$ where $k$ is computed as part of the optimization process.
 The \emph{cut} $\delta(\Pi_1,\ldots,\Pi_k)$ induced by a decomposition is the subset of those edges that straddle distinct clusters.
 
 The space of all multicuts is denoted as
