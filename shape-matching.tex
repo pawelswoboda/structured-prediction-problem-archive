@@ -4,12 +4,11 @@ The shape matching problem is to find a mapping between shapes.
 For an illustration see Figure~\ref{fig:shape-matching}.
 We follow the formulation of~\cite{windheuser2011geometrically,windheuser2011large} of the shape matching problem as an ILP for orientation preserving geometrically consistent matching.
 
-\begin{figure}[H]
-\begin{center}
+\begin{figure}[h]
+\centering
 \includegraphics[width=0.8\columnwidth]{images/cat-matching}
-\end{center}
-\label{fig:shape-matching}
 \caption{Shape matching of a cat in different poses. Colors encode matches of triangles.}
+\label{fig:shape-matching}
 \end{figure}
 
 \begin{definition}[Shape]
@@ -18,7 +17,10 @@ edges
 $E_X \subset V_X \times V_X$ 
 and triangles 
 $F_X \subset V_X \times V_X \times V_X$,
-such that the manifold induced by the triangles is oriented and has no boundaries\footnote{We note that partial shapes can be handled by closing holes and defining suitable costs for matching holes, see Appendix for more details.}.
+such that the manifold induced by the triangles is oriented and has no boundaries.
+
+We denote by $\overline{F}_{\bullet}$ the space of all also possibly degenerated triangles, i.e.\ edges and vertices as well.
+Similarly $\overline{E}_{\bullet}$ is the space of all also possibly degenerated edges.
 \end{definition}
 
 \begin{definition}[Product Spaces]

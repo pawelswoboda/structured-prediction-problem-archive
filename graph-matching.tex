@@ -3,7 +3,7 @@
 
 The graph matching problem is equivalent to Lawler's form of the quadratic assignment problem (QAP) from the combinatorial optimization literature.
 
-Given two point sets the task is to establish $1:1$ correspondences between points in the respective sets.
+Given two point sets the task is to establish partial one-to-one correspondences between points in the respective sets.
 
 \begin{definition}[Graph Matching]
 Given $N_1,N_2 > 0$ and linear costs $c_{ij} \in \R$ for $(i,j) \in \R^{N_1 \times N_2}$ and quadratic costs $d \in \R^{N_1 \times N_2 \times N_1 \times N_2}$ the graph matching problem is
@@ -19,8 +19,8 @@ Given $N_1,N_2 > 0$ and linear costs $c_{ij} \in \R$ for $(i,j) \in \R^{N_1 \tim
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\columnwidth]{images/train-matching.png}
-        \caption{Keypoint matching in computer vision. Keypoints in both picturesgive rise to points sets for the graph matching problem.}
+        \includegraphics[width=0.95\columnwidth]{figures/graph-matching.tex}
+        \caption{Finding node correspondence $\pi$ on two graphs (green and blue background respectively). Nodes are matched (red lines) such that matched edges have corresponding weights.}
         \label{fig:cell-tracking}
     \end{center}
 \end{figure}
@@ -73,13 +73,40 @@ The 30 instances have up to $\max(N_1,N_2) = 1500$ points. Costs are sparse.
 
 \subsection{Algorithms}
 \begin{description}
-\item[Semidefinite Programming~\cite{schellewald2005probabilistic}:] Semidefinite relaxation for graph matching.
+\item[Semidefinite Programming~\cite{schellewald2005probabilistic}:]
+    Semidefinite relaxation for graph matching.
 \item[Dual Decomposition~\cite{torresani2012dual}:]
-Subgradient ascent on a dual decomposition of graph matching into max-flow, linear assignment and enumeraive local subproblems.
+Subgradient ascent on a dual decomposition of graph matching into max-flow, linear assignment and enumerative local subproblems.
 \item[Hungarian BP~\cite{zhang2016pairwise}:]
 Message passing using additionally a linear assignment solver.
 \item[Message Passing~\cite{swoboda2017study}]
 Several improved message passing schemes on different decompositions.
 \item[Fusion Moves~\cite{hutschenreiter2021fusion}:] Explore subspaces of graph matchings generated randomly and solve with ILP solvers.
 \item[Covering Trees~\cite{yarkony2010covering}:] Convert the graph matching problem to one large tree MRF with additional Lagrange multipliers and optimize with message passing.
+\item[DS*~\cite{bernard2018ds}:]
+    A lifting-free convex relaxation approach.
+\item[Semidefinite Optimization~\cite{kezurer2015tight}:]
+    Semidefinite optimization problem formulation of multi-graph matching.
+\item[Graduated assignment~\cite{gold1996graduated}:]
+    An algorithm combining graduated nonconvexity, two-way assignment constraints and sparsity.
+\item[Tabu search~\cite{adamczewski2015discrete}:]
+    Reformulation of graph matching into an equivalent weighted maximum clique problem solved by tabu search.
+\item[Fixed-point iteration~\cite{leordeanu2009integer}:]
+    Climbing and convergence guaranteeing discretization scheme.
+\item[Max-Pooling~\cite{cho2014finding}:]
+    Matching through evaluating neighborhood candidates and gradually propagating matching scores to neighbors via max-pooling, eventually producing reliability matching scores.
+\item[Spectral correspospondence finding~\cite{leordeanu2005spectral}:]
+    Correct assignment clustering via principal eigenvector and additionally imposing mapping constraints.
+\item[Umeyama's Eigen-decomposition method~\cite{zhao2007using}:]
+    Generalization of Umeyama's formula for graph matching and corresponding matching algorithm.
+\item[Reweighted random walks~\cite{cho2010reweighted}:]
+    Graph matching formulation as node selection on an association graph solved by simulating random walks with reweighting jumps enforcing matching constraints.
+\item[MCMC~\cite{lee2010graph}:]
+    Data-driven Markov Chain Monte Carlo sampling additionally using spectral properties of the graphs.
+\item[Sequential Monte Carlo~\cite{suh2012graph}:]
+    Sequential Monte Carlo sampling a sequence of of intermediate target distributions with importance resampling for maximizing the graph matching objective.
+\item[Path following~\cite{zaslavskiy2008path}:]
+    A convex-concave programming formulation obtained by rewriting graph matching as a least-squares problem on the set of permutation matrices and solving a quadratic convex and concave problem.
+\item[Factorized graph matching~\cite{zhou2015factorized}:]
+Graph matching via affinity matrix factorization as a Kronecker product of smaller matrices solved approximately through a path-following Frank-Wolfe algorithm.
 \end{description}
