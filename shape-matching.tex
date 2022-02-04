@@ -67,8 +67,19 @@ We follow the shape matching formulation of~\cite{windheuser2011geometrically,wi
 	The $f$-th entry $\Gamma_f$ belongs to the $f$-th triangle product in $F$.
 \end{definition}
 Triangle products encode a matching between a triangle from $X$ and a triangle from $Y$. Hence, discrete surfaces encode a matching between $X$ and $Y$. Constraints are needed to ensure surjectivity and geometric consistency of the matching. 
+
+\begin{definition}[Projection Operator]
+	The projection $\pi_X : F \rightarrow \Z^{\abs{F_X}}$ is defined by
+	\begin{equation}
+        (\pi_x \Gamma)_{a_1 a_2 a_3} = \sum_{\left\{ f \in F : f = \begin{pmatrix} a_1, b_1\\ a_2, b_2 \\ a_3, b_3 \end{pmatrix}\right\}} \Gamma_f\,.
+	\end{equation}
+    for all non-degenerate triangles $a_1 a_2 a_3 \in F_X$.
+
+	The projection operator $\pi_Y$ is defined analoguously.
+\end{definition}
+
 \begin{definition}[Surjectivity Constraint]
-	A given discrete surface $\Gamma$ ensures a surjectiv matching of $X$ with $Y$ if it projects to each shape $X$ and $Y$ such that
+	A given discrete surface $\Gamma$ ensures a surjective matching of $X$ with $Y$ if it projects to each shape $X$ and $Y$ such that
 	\begin{equation}
 			\begin{pmatrix}
 			\pi_X \\ \pi_Y
@@ -81,22 +92,6 @@ Triangle products encode a matching between a triangle from $X$ and a triangle f
 	\end{equation}
 	with $\boldsymbol{1}_{|F_X|} \in \{1\}^{|F_X|}$ and $\boldsymbol{1}_{|F_Y|} \in \{1\}^{|F_Y|}$.
 \end{definition}
-
-
-%\begin{definition}[Projection Operator]
-%	The projection $\pi_X : F \rightarrow \Z^{\abs{F_X}}$ is defined by
-%	\begin{equation}
-%		\pi_X(f) = \begin{cases}
-%			e_a, & a = \begin{pmatrix} a_1 \\ a_2 \\ a_3 \end{pmatrix} \text{ non-degenerate}\\
-%			(0,\ldots,0), & \text{else}
-%		\end{cases}
-%	\end{equation}
-%	for each product triangle $f = \begin{pmatrix} a_1,b_1\\a_2,b_2\\a_3,b_3\end{pmatrix} \in F$.
-%	Here $e_a \in \{0, 1\}^{|F_X|}$ is a vector with a $1$ in the $a$-th entry and $0$ everywhere else.
-%	A triangle $\begin{pmatrix} a_1,b_1\\a_2,b_2\\a_3,b_3\end{pmatrix} \in F$is called degenerate if not all vertices are distinct.
-%	
-%	The projection operator $\pi_Y$ is defined analoguously.
-%\end{definition}
 
 \begin{definition}[Orientation]
 	For the sets $E_X$ and $E_Y$ an arbitrary orientation shall be defined. This implies an orientation for each edge product $e = \begin{pmatrix} a_1,b_1 \\ a_2,b_2 \end{pmatrix} \in E$.
