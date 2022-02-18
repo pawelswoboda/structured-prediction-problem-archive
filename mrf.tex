@@ -8,7 +8,7 @@ MAP-MRF for discrete MRFs can be cast as an ILP~\cite{werner2007linear}.
 
 \begin{definition}[MRF]
     \label{def:mrf}
-Let an undirected graph $G=(V,E)$, label spaces $\mathcal{L}_v = \{0,1,\ldots, \abs{\mathcal{L}_v}-1\}$ for each variable $v \in V$ and $\mathcal{L} = \prod_{v \in V} \mathcal{L}_v$ and 
+Let an undirected graph $G=(V,E)$, label spaces $\mathcal{L}_v = \{1,\ldots, \abs{\mathcal{L}_v}\}$ for each variable $v \in V$ and $\mathcal{L} = \prod_{v \in V} \mathcal{L}_v$ and 
 unary potentials $\phi_v : \mathcal{L}_v \rightarrow \R$, $v \in V$ as well as pairwise potentials
 $\phi_{uv} : \mathcal{L}_u \times \mathcal{L}_v \rightarrow \R$, $uv \in E$ be given.
 The probability distribution defined by an MRF $(V,E,\mathcal{L},\phi)$ is given by
@@ -26,7 +26,7 @@ x^* \in \argmax_{x \in \mathcal{L}} \mathbb{P}(x)\,.
 \end{equation}
 After taking negative logarithms $\theta_v = - \log(\phi_v)$ $\forall v \in V$ and $\theta_{uv} = -\log(\phi_{uv})$ $\forall uv \in E$ the MAP problem~\eqref{eq:map-mrf} can be written as
 \begin{equation}
-\min_{x \in \mathcal{L}} = \sum_{v \in V} \theta_v(x_v) + \sum_{uv \in E} \theta_{uv}(x_u,x_v) \,.
+\min_{x \in \mathcal{L}} \theta(x) = \sum_{v \in V} \theta_v(x_v) + \sum_{uv \in E} \theta_{uv}(x_u,x_v) \,.
 \end{equation}
 \end{definition}
 
@@ -65,20 +65,20 @@ MARKOV
 2 (*$i_{\abs{E}}$*) (*$j_{\abs{E}}$*) 
 
 (*$\abs{\mathcal{L}_1}$*) 
-(*$\theta_1(0)$*) ... (*$\theta_1(\abs{\mathcal{L}_1}-1)$*)
+(*$\theta_1(1)$*) ... (*$\theta_1(\abs{\mathcal{L}_1})$*)
 .
 .
 .
 (*$\abs{\mathcal{L}_{\abs{V}}}$*)
-(*$\theta_{\abs{V}}(0)$*) ... (*$\theta_{\abs{V}}(\abs{\mathcal{L}_{\abs{V}}}-1)$*)
+(*$\theta_{\abs{V}}(1)$*) ... (*$\theta_{\abs{V}}(\abs{\mathcal{L}_{\abs{V}}})$*)
 
 (*$\abs{\mathcal{L}_{i_1}} \cdot \abs{\mathcal{L}_{j_1}} $*) 
-(*$\theta_{i_1 j_1}(0,0)$*) (*$\theta_{i_1 j_1}(0,1)$*) ... (*$\theta_{i_1 j_1}(\abs{\mathcal{L}_{i_1}}, \abs{\mathcal{L}_{j_1}})$*)
+(*$\theta_{i_1 j_1}(1,1)$*) (*$\theta_{i_1 j_1}(1,2)$*) ... (*$\theta_{i_1 j_1}(\abs{\mathcal{L}_{i_1}}, \abs{\mathcal{L}_{j_1}})$*)
 .
 .
 .
 (*$\abs{\mathcal{L}_{i_{\abs{E}}}} \cdot \abs{\mathcal{L}_{j_{\abs{E}}}} $*) 
-(*$\theta_{i_{\abs{E}} j_{\abs{E}}}(0,0)$*) ... (*$\theta_{i_{\abs{E}} j_{\abs{E}}}(\abs{\mathcal{L}_{i_{\abs{E}}}}, \abs{\mathcal{L}_{j_{\abs{E}}}})$*)
+(*$\theta_{i_{\abs{E}} j_{\abs{E}}}(1,1)$*) ... (*$\theta_{i_{\abs{E}} j_{\abs{E}}}(\abs{\mathcal{L}_{i_{\abs{E}}}}, \abs{\mathcal{L}_{j_{\abs{E}}}})$*)
 \end{fileformat}
 }
 The file is structured as follows:
@@ -98,7 +98,7 @@ The below datasets object-seg, color-seg, color-seg-n4, color-seg-n8 and protein
 These datasets are additionally given in the OpenGM hdf5 format.
 
 \subsubsection[object-seg]{object-seg\footnote{\url{https://keeper.mpdl.mpg.de/f/716a0a8621f44d0ba9be/?dl=1}}}
-Segmentation of objects in 3 images of size up to 424720 with up to 4 semantic classes and Potts pairwise potentials on an 8-neighborhood.
+Segmentation of objects in 3 images of size up to 424720 nodes with up to 4 semantic classes and Potts pairwise potentials on an 8-neighborhood.
 
 \subsubsection[color-seg]{color-seg\footnote{\url{https://keeper.mpdl.mpg.de/f/cdcae8287a36403e9ecd/?dl=1}}}
 Image segmentation with up to 424720 nodes on an 8-neigborhood with up to 4 labels. 
@@ -118,9 +118,6 @@ Instances are originally from~\cite{lellmann2011continuous}.
 \subsubsection[protein-folding]{protein-folding\footnote{\url{https://keeper.mpdl.mpg.de/f/927e7cfa31fa4cd9bcd4/?dl=1}}}
 29 instances of moderate size with sparse and full connectivity and pairwise potentials of general type.
 Instances are originally from~\cite{jaimovich2006towards,elidan2011probabilistic}.
-
-
-
 
 \subsection{Algorithms}
 \begin{description}[style=unboxed]
@@ -150,12 +147,13 @@ Instances are originally from~\cite{jaimovich2006towards,elidan2011probabilistic
 \item[Bundle Method~\cite{kappes2012bundle}:] Bundle method optimizing a Lagrange decomposition into trees.
 \item[Frank-Wolfe Bundle Method~\cite{swoboda2019map}:] Lagrange decomposition into minimal number of tree subproblems solved with a bundle method using the Frank-Wolfe algorithm.
 \item[Iterated Conditional Modes (ICM)~\cite{besag1986statistical}:] Iteratively improve the labeling of a single variable and keep the others fixed.
+\item[Fixed-point iteration~\cite{leordeanu2009integer}:] Climbing and convergence guaranteeing discretization scheme.
 \item[Lazy Flipper~\cite{andres2012lazy}:] ICM~\cite{besag1986statistical} extension for flipping assignments of $k$ variables at a time efficiently.
 \item[Nesterov's scheme~\cite{savchynskyy2011study}:] Nesterov's fast gradient based algorithm on a smoothed approximate of the Lagrange dual.
 \item[Primal-Dual~\cite{schmidt2011evaluation}:] A first order primal-dual algorithm optimizing the local polytope relaxation.
 \item[Dead End Elimination (DEE) Persistency~\cite{desmet1992dead}:] Compute for every variable assignment whether changing the assignment to some other label always improves the energy. If so, elimiate variable/label assignment.
 \item[Kovtun's persistency criterion~\cite{desmet1992dead}:] Solve auxiliary max-flow subproblems to compute certificates whether variable assignments are optimal.
 \item[Improving Mapping Persistency~\cite{shekhovtsov2014maximum,shekhovtsov2015maximum,shekhovtsov2016higher}:] Find optimal variable assignments by constructing improving mapping that fixes optimal variabl assignments.
-\item[Iterative Pruning Persistency~\cite{swoboda2013partial,swoboda2014partial}:] Iteratively shrink the MRF by removing nodes where persistency cannot be proved and modify the rest problem with boundary terms coming from the deleted variables.
+\item[Iterative Pruning Persistency~\cite{swoboda2013partial,swoboda2014partial}:] Iteratively shrink the MRF by removing nodes where persistency cannot be proved and modify the pruned problem with boundary terms coming from the deleted variables.
 \end{description}
 

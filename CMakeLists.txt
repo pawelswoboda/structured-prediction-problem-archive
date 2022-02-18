@@ -17,6 +17,7 @@ add_latex_document(main.tex
     figures/asymmetric-multiway-cut.tex
     lifted-disjoint-paths.tex
     figures/lifted-disjoint-paths.tex
+    figures/graph-matching.tex
     graph-matching.tex
     multi-graph-matching.tex
     cell-tracking.tex

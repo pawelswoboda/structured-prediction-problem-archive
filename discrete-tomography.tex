@@ -51,15 +51,15 @@ for $P_i = (i_1,\ldots,i_{\abs{P_i}})$ and $i=1,\ldots,K$.
 \subsection{Datasets}
 \subsubsection[Synthetic Discrete Tomography]{Synthetic Discrete Tomography\footnote{\url{https://keeper.mpdl.mpg.de/f/8827141df8254eefbac4/?dl=1}}}
 Around $2700$ discrete tomography instances computed from $30 \times 30$ synthetically generated images with 3 discrete intensity values and varying density of observed objects measured by varying numbers of tomographic projections.
-Additionally discrete tomography instances of the ``Logan'' image are given.
+Additionally larger discrete tomography instances of the ``Logan'' image are given.
 
 \subsection{Algorithms}
 \begin{description}[style=unboxed]
-\item[\cite{kappes2015tomogc}:]
+\item[Subgradient ascent on submodular MRF \& Projection~\cite{kappes2015tomogc}:]
     A binary discrete tomography solver using a Lagrange decomposition into submodular binary MRF solved with graph cuts and tomographic projection constraint solved via linear algebra.
-\item[\cite{zisler2016non}:]
+\item[First-order optimization~\cite{zisler2016non}:]
     Combination of total variation regularized reconstruction problem with a non-convex discrete constraint optimized with forward-backward splitting.
-\item[\cite{zisler2016discrete}:]
+\item[Fixed-point iteration~\cite{zisler2016discrete}:]
     Combination of a non-local projection constraint problem with a continuous convex relaxaton of the multilabeling problem solved by a fixed point iteration each of which amounts to solution of a convex auxiliary problem.
 \item[Subgradient on decomposition into chain subproblems~\cite{kuske2017novel}:]
     Decompose original problems into chain subproblems that are recursively solved with fast (max,sum)-algorithms.

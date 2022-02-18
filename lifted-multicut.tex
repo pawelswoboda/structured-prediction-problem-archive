@@ -4,7 +4,7 @@
 The lifted multicut problem~\cite{keuper2015efficient} is an extension of the multicut graph clustering problem to allow for connectivity priors.
 
 \begin{definition}[Lifted Multicut]
-Given two undirected weighted graphs $G=(V,E,c)$ and $G'=(V,E',c')$  called the base and lifted graph respectively the lifted multicut problem is to find a partition $\Pi = (\Pi_1,\ldots,\Pi_k)$ such that $\Pi_i \cap \Pi_j$ for $i \neq j$ and $\dot{\cup}_{i\in[k]} \Pi_j = V$ and \emph{each $\Pi_i$ is connected w.r.t. to the base graph $G$} where $k$ is computed as part of the optimization process.
+Given two undirected weighted graphs $G=(V,E,c)$ and $G'=(V,E',c')$  called the base and lifted graph respectively the lifted multicut problem is to find a partition $\Pi = (\Pi_1,\ldots,\Pi_k)$ such that $\Pi_i \cap \Pi_j=\varnothing$ for $i \neq j$ and $\dot{\cup}_{i\in[k]} \Pi_j = V$ and \emph{each $\Pi_i$ is connected w.r.t. to the base graph $G$} where $k$ is computed as part of the optimization process.
 The \emph{base cut} $y=\delta_G(\Pi_1,\ldots,\Pi_k)$, and \emph{lifted cut} $y' = \delta_{G'}(\Pi_1,\ldots,\Pi_k)$ induced by a decomposition is the subset of those base and lifted edges that straddle distinct clusters.
 
 The space of all lifted multicuts is denoted as

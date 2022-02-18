@@ -3,14 +3,14 @@
 The multi-graph matching problem is an extension of the graph matching problem from Section~\ref{sec:graph-matching} to more than two graphs with additional cycle consistency constraints ensuring that compositions of matchings are consistent.
 
 \begin{definition}[Multi-Graph Matching]
-Given $N_1,\ldots,N_K > 0$ and linear costs $c^{pk} \in \R^{N_p \times N_k}$ and quadratic costs $d^{pk} \in \R^{N_p \times N_k \times N_p \times N_k}$ for every $p \neq k$, the multi-graph matching problem is
+Given $N_1,\ldots,N_K > 0$ and linear costs $c^{pk} \in \R^{N_p \times N_k}$ and quadratic costs $d^{pk} \in \R^{N_p \times N_k \times N_p \times N_k}$ for every $p < k$, the multi-graph matching problem is
 \begin{equation}
 \begin{array}{cl}
     \min\limits_{(x^{pk} \in \R^{N_p \times N_k})_{p,k}}
-    &\sum\limits_{p \neq k} \sum\limits_{ij \in E} c_{ij} x_{ij} + \sum\limits_{ijkl \in T} d_{ijkl} x_{ij} x_{kl} \\ 
+    &\sum\limits_{p < k} \sum\limits_{ij \in E} c_{ij} x_{ij} + \sum\limits_{ijkl \in T} d_{ijkl} x_{ij} x_{kl} \\ 
 \text{s.t.}
-& \sum\limits_{j=1,\ldots,m} x^{pk}_{ij} \leq 1 \quad \forall i\in [N_p], p\neq k \\
-& \sum\limits_{i=1,\ldots,n} x^{pk}_{ij} \leq 1 \quad \forall j\in [N_k], p\neq k \\
+& \sum\limits_{j=1,\ldots,m} x^{pk}_{ij} \leq 1 \quad \forall i\in [N_p], p < k \\
+& \sum\limits_{i=1,\ldots,n} x^{pk}_{ij} \leq 1 \quad \forall j\in [N_k], p < k \\
 & x^{pk} \cdot x^{kl} \leq x^{pl} \quad \forall p \neq k \neq l \\
     & x^{pk} = (x^{kp})^\top \quad \forall p \neq k
 \end{array}
@@ -18,7 +18,7 @@ Given $N_1,\ldots,N_K > 0$ and linear costs $c^{pk} \in \R^{N_p \times N_k}$ and
 where we use~$\cdot$~for matrix multiplication and~$\leq$~holds elementwise.
 \end{definition}
 
-An illustration of the multi-graph matching problem with matchings that are obey resp.\ violate cycle consistency is given in Figure~\ref{fig:multi-graph-matching}.
+An illustration of the multi-graph matching problem with matchings that obey resp.\ violate cycle consistency is given in Figure~\ref{fig:multi-graph-matching}.
 
 \begin{figure}[H]
     \centering
@@ -58,7 +58,7 @@ gm (*$K-2$*) (*$K-1$*)
 \subsubsection[Hotel \& House]{Hotel \& House\footnote{\url{https://keeper.mpdl.mpg.de/f/d7ba7019eede485fb457/?dl=1}}}
 In this experiment we consider the CMU house and hotel sequences.
 $40\%$ of the points are outliers and the total number of points per image is $10$. 
-For this, we have followed the protocol of [41], where further details are described.
+For problem generation we have followed the protocol of [41], where further details are described.
 Costs are computed as in~\cite{yan2015multi}.
 In total there are 80 instances, 40 for house and 40 for hotel.
 
@@ -75,20 +75,29 @@ In total there are 400 instances, 50 per number of point sets.
 \subsection{Algorithms}
 \begin{description}[style=unboxed]
     \item[Permutation Synchronization~\cite{bernard2019synchronisation,pachauri2013solving}:]
-    \item[Alternating Graph matching~\cite{yan2013joint}:]
-    \item[Graduated Consistency~\cite{yan2014graduated}:]
-    \item[Alternating Optimization~\cite{zhou2015multi}:]
-    \item[Affinity optimization with graduated consistency regularization~\cite{yan2015multi}:]
-    \item[Alternating Optimization~\cite{yan2015consistency}:]
+        Non-negative matrix factorisation followed by Euclidean projection for binarization.
+    \item[Alternating Graph matching~\cite{yan2013joint,zhou2015multi,yan2015consistency}:]
+        Alternating optimization between graph matching solvers and a cycle consistency-enforcing component.
+    \item[Graduated Consistency~\cite{yan2014graduated,yan2015multi}:]
+        Iterative approximation of the graph matching objective with gradual consistency enforcement.
     \item[Matrix Decomposition~\cite{yan2015matrix}:]
+         Matrix decomposition based formulation solved through convex optimization.
     \item[Factorized Matching~\cite{zhou2015factorized}:]
+        Global alternating minimization approach via low-rank matrix recovery.
     \item[Semidefinite Optimization~\cite{kezurer2015tight}:]
+        Semidefinite optimization problem formulation of multi-graph matching.
     \item[Fast Clustering~\cite{tron2017fast}:]
+        Clustering-based formulation identifying multi-image matchings from a density function in feature space.
     \item[Tensor Power Iteration~\cite{shi2016tensor}:]
+        Rank-1 tensor approximation solved via power iteration.
     \item[Mining Consistent Features~\cite{wang2018multi}:]
+        Multi-graph matching by matching sparse feature sets and geometric consistency through low-rank constraints. 
     \item[DS*~\cite{bernard2018ds}:]
+        A lifting-free convex relaxation approach.
     \item[Random Walk~\cite{park2019consistent}:]
-    \item[Convex Message Passing~\cite{swoboda2019convex}:] Lagrange decomposition optimized with message passing. Cycle consistency is enforced via a cutting plane procedure that add tightening subproblems.
+        A multi-layer random walk synchronization approach.
+    \item[Convex Message Passing~\cite{swoboda2019convex}:] Lagrange decomposition optimized with message passing. Cycle consistency is enforced via a cutting plane procedure that adds tightening subproblems.
     \item[HiPPi~\cite{bernard2019hippi}:]
+        A higher-order projected power iteration method. 
 \end{description}
 
