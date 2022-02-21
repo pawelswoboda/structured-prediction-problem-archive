@@ -83,6 +83,8 @@ Each instance contains approximately $2$ million nodes and $9$ million edges.
 Kernighan \& Lin with joins (KLj) computes sequences of node exchanges between clusters and cluster joins that improve the objective.
 \item[Balanced Edge Contraction~\cite{kardoost2018solving}:] Like GAEC but additionally preferring edges with endpoints that contain fewer original nodes.
 \item[Greedy Edge Fixation~\cite{levinkov2019comparative}:] Like GAEC but additionally prevent contractions on certain repulsive edges.
+\item[Multi-stage Multicuts (MSM)~\cite{ho2021msm}:] Solve multiple minimum cost multicut problems across distributed compute units.
+\item[Benders decomposition~\cite{lukasik2020benders}:] A Benders decomposition algorithm with node subproblems solved in parallel and accelerated through Magnanti-Wong Benders rows.
 \item[RAMA~\cite{abbas2021combinatorial}:] Primal/dual algorithm using parallel edge contraction and fast separation/message passing for computing lower bounds and reduced costs.
 \item[Message Passing~\cite{swoboda2017message}:] Sequential separation/message passing.
 \item[Cycle Packing \& Persistency~\cite{lange2018partial}:] Fast cycle separation with interleaved greedy cycle packing for obtaining dual lower bounds. Simple persistency criteria for fixing variables to optimal values without optimizing the whole problem.
