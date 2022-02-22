@@ -68,44 +68,57 @@ For an illustration of the lifted disjoint paths problem see Figure~\ref{fig:LDP
 
 
 \subsection{File Format}
-File defining costs between pairs of nodes. Some of the pairs are selected to create flow edges, some of them are selected to create lifted edges according to the strategy for graph creation given by solver parameters. Note that lifted and flow edges can overlap. 
+\paragraph{File defining costs between pairs of nodes.} Some of the pairs are selected to create flow edges, some of them are selected to create lifted edges according to the strategy for graph creation given by solver parameters. Note that lifted and flow edges can overlap. 
 \begin{fileformat}
-	(*$|V'|$*)
-	(*$v_1$*),(*$w_1$*),(*$c_1$*)
-	.
-	.
-	.
-	(*$v_m$*),(*$w_m$*),(*$c_m$*) 
+(*$|V'|$*)
+(*$v_1$*),(*$w_1$*),(*$c_1$*)
+.
+.
+.
+(*$v_m$*),(*$w_m$*),(*$c_m$*) 
 \end{fileformat}
-File defining which graph nodes belong to which time frames. Time frames are numbered from $1$ to $T$ (maximal time frame). Nodes are numbered from $0$ to $|V'|-1$. $V_i$ denotes nodes in time frame $i$.
+\paragraph{File defining the distribution of nodes in time frames.} Time frames are numbered from $1$ to $T$ (maximal time frame). Nodes are numbered from $0$ to $|V'|-1$. $V_i$ denotes nodes in time frame $i$.
 \begin{fileformat}
-	(*$1$*) (*$0$*)
-	(*$1$*) (*$1$*)
-	.
-	.
-	.
-	(*$1$*) (*$|V_1|-1$*)
-	(*$2$*) (*$|V_1|$*)
-	.
-	.
-	.
-	(*$2$*) (*$|V_1|+|V_2|-1$*)
-	.
-	.
-	.
-	(*$T$*) (*$|V'|-1$*)
+(*$1$*) (*$0$*)
+(*$1$*) (*$1$*)
+.
+.
+.
+(*$1$*) (*$|V_1|-1$*)
+(*$2$*) (*$|V_1|$*)
+.
+.
+.
+(*$2$*) (*$|V_1|+|V_2|-1$*)
+.
+.
+.
+(*$T$*) (*$|V'|-1$*)
 \end{fileformat}
-File with solver parameters.
+\paragraph{File with solver parameters.}The file starts with the keyword [SOLVER] (including the brackets). Each parameter name is written with capital letters and underscores. Parameter values follow the $=$ sign.
 \begin{fileformat}
-	[SOLVER]
-	FIRST_PARAMETER_NAME=value1
-	SECOND_PARAMETER_NAME=value2
-	.
-	.
-	.
+[SOLVER]
+FIRST_PARAMETER_NAME=value1
+SECOND_PARAMETER_NAME=value2
+.
+.
+.
+\end{fileformat}
+
+\paragraph{Input file for the approximate solver.} We typically use the same set of parameters for processing all instances within a~dataset. The first LDP solver LifT specifies path to instance files in the parameter file. Therefore, a~separate parameter file is needed for each problem instance. Solver ApLift enables to use one parameter file for multiple instances. The path to instance files and to the parameter file is specified in the input input file that has the following format. 
+\begin{fileformat}
+INPUT_GRAPH=/path/to/edge/costs
+INPUT_FRAMES=/path/to/nodes/in/frames
+INPUT_PARAMS=/path/to/parameter/file
 \end{fileformat}
 
 \subsection{Datasets}
+\subsubsection{MOT Challenge}
+The main application of LDP is in multiple object tracking.
+The MOT15/16/17 benchmarks \cite{MOTChallenge2015,MOT16} contain semi-crowded videos sequences filmed from a~static or a~moving camera. 
+MOT20 \cite{MOTChallenge20} comprises crowded scenes with considerably higher number of  frames  and detections per frame.
+
+
 
 \subsection{Algorithms}
 \begin{description}
