@@ -1,0 +1,47 @@
+\section{Factorized Complete Multicut}
+\label{sec:complete_multicut}
+An extension of the multicut problem to complete graphs where the edge costs are computed from node features. The problem was proposed in~\cite{aabbas23_clusterfug} to alleviate the need for specifying a suitable graph structure for the multicut problem~\eqref{eq:multicut}. 
+\begin{definition}[Factorized Complete Multicut]
+    Given a set of nodes $V$ where each node $i \in V$ has a feature vector $f_i \in \R^d$. We consider all possible edges i.e.\ $E = \{ij : i \in V, j \in V\setminus \{i\} \}$. 
+    Let $G = (V, E)$ and $s: \R^d \times \R^d \rightarrow \R$ then the factorized complete multicut problem is
+    \begin{equation}
+        \label{eq:factorized_complete_multicut}
+        \begin{array}{rl}
+            \min_{y \in \mathcal{M}_G} \sum\limits_{i \in V} \sum\limits_{j \in V \setminus i} s(f_i, f_j) \cdot y_{ij}.
+        \end{array}
+    \end{equation}
+\end{definition}
+
+An illustration of factorized complete multicut is given in Figure~\ref{fig:factorized-complete-multicut}.
+
+\begin{figure}[H]
+    \begin{center}
+    \scalebox{1.5}{\includestandalone{figures/factorized_complete_multicut}}
+    \end{center}
+    \caption{Illustration of factorized complete multicut problem on $5$ nodes. Each node $i$ is associated with a vector $f_i \in \R^2$ and all possible edges between distinct nodes are considered. The edge cost between a pair of nodes $i$, $j$ is given by $s(f_i, f_j)$ and attractive/repulsive edges are colored green/red. Edge thickness represents absolute edge cost. Also shown is the optimal partitioning to $2$ clusters with cut edges as dashed lines.}    
+    \label{fig:factorized-complete-multicut}
+\end{figure}
+In the following we assume that the edge cost $s(f_i, f_j)$ is defined as $\la f_i, f_j \ra - \alpha$ as done in~\cite{aabbas23_clusterfug}. Increasing value of $\alpha$ helps in creating more clusters and vice versa.
+\subsection{File Format}
+\begin{fileformat}
+FACTORIZED COMPLETE MULTICUT
+(*$\alpha$*)
+(*$\abs{V}$*) (*d*)
+(*$f_1^1$*) ... (*$f_1^d$*)
+.
+.
+(*$f_{\abs{V}}^1$*) ... (*$f_{\abs{V}}^d$*)
+\end{fileformat}
+\subsection{Benchmark datasets}
+
+\subsubsection{Imagenet Clustering}
+Clustering of the ImageNet~\cite{deng2009imagenet} validation set containing $50k$ images. Each image acts a node for the complete multicut problem. The features have a dimension of $2048$ and are normalized to have unit $L_2$ norm. Two problem instances created by~\cite{aabbas23_clusterfug} are provided\footnote{\url{https://keeper.mpdl.mpg.de/f/ac94cee3de7b45ed9539/?dl=1}} containing $5k$ and $50k$ images by considering $100$ and all $1000$ classes respectively. All instances use $\alpha = 0.4$.
+
+\subsubsection{Cityscapes Instance Segmentation}
+For the task of instance segmentation on Cityscapes validation set~\cite{cordts2016cityscapes}. For each \textit{thing} class a separate complete multicut problem instance is created at $4$ times downsampled resolution w.r.t.\ the input resolution. 
+In total there are $1631$ problem instances\footnote{\url{https://keeper.mpdl.mpg.de/f/e5c3a48377a34561991d/?dl=1}} computed by~\cite{aabbas23_clusterfug}. The largest problem instance contains around $43k$ nodes. All instances use $\alpha = 0.4$.
+\subsection{Algorithms}
+For solving the complete multicut problem all algorithms from Section~\ref{sec:multicut} are applicable but can be inefficient for large problems. 
+\begin{description}
+\item[ClusterFuG~\cite{aabbas23_clusterfug}:] Multiple algorithms based on edge contraction similar to GAEC algorithm for multicut~\cite{keuper2015efficient}. The algorithms make use of nearest neighbour techniques and factorized edge costs structure for efficiency.
+\end{description}
