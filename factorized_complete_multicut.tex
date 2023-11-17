@@ -1,9 +1,12 @@
 \section{Factorized Complete Multicut}
 \label{sec:complete_multicut}
-An extension of the multicut problem to complete graphs where the edge costs are computed from node features. The problem was proposed in~\cite{aabbas23_clusterfug} to alleviate the need for specifying a suitable graph structure for the multicut problem~\eqref{eq:multicut}. 
+Factorized Complete Multicut is an extension of the multicut problem to complete graphs where the edge costs are computed from node features.
+The problem was proposed in~\cite{aabbas23_clusterfug} to alleviate the need for specifying a suitable graph structure for the multicut problem~\eqref{eq:multicut}. 
 \begin{definition}[Factorized Complete Multicut]
-    Given a set of nodes $V$ where each node $i \in V$ has a feature vector $f_i \in \R^d$. We consider all possible edges i.e.\ $E = \{ij : i \in V, j \in V\setminus \{i\} \}$. 
-    Let $G = (V, E)$ and $s: \R^d \times \R^d \rightarrow \R$ then the factorized complete multicut problem is
+    Let a set of nodes $V$ where each node $i \in V$ with feature vectors $f_i \in \R^d$ be given.
+    We consider all possible edges i.e.\ $E = \{ij : i \in V, j \in V\setminus \{i\} \}$. 
+    Let $G = (V, E)$ be the complete graph and $s: \R^d \times \R^d \rightarrow \R$ the edge cost function.
+    The factorized complete multicut problem is
     \begin{equation}
         \label{eq:factorized_complete_multicut}
         \begin{array}{rl}
@@ -35,13 +38,20 @@ FACTORIZED COMPLETE MULTICUT
 \subsection{Benchmark datasets}
 
 \subsubsection{Imagenet Clustering}
-Clustering of the ImageNet~\cite{deng2009imagenet} validation set containing $50k$ images. Each image acts a node for the complete multicut problem. The features have a dimension of $2048$ and are normalized to have unit $L_2$ norm. Two problem instances created by~\cite{aabbas23_clusterfug} are provided\footnote{\url{https://keeper.mpdl.mpg.de/f/ac94cee3de7b45ed9539/?dl=1}} containing $5k$ and $50k$ images by considering $100$ and all $1000$ classes respectively. All instances use $\alpha = 0.4$.
+consists of the ImageNet~\cite{deng2009imagenet} validation set containing $50k$ images.
+Each image acts a node for the complete multicut problem.
+The features have a dimension of $2048$ and are normalized to have unit $L_2$ norm.
+Two problem instances created by~\cite{aabbas23_clusterfug} are provided\footnote{\url{https://keeper.mpdl.mpg.de/f/ac94cee3de7b45ed9539/?dl=1}} containing $5k$ and $50k$ images by considering $100$ and all $1000$ classes respectively. 
+All instances use $\alpha = 0.4$.
 
 \subsubsection{Cityscapes Instance Segmentation}
-For the task of instance segmentation on Cityscapes validation set~\cite{cordts2016cityscapes}. For each \textit{thing} class a separate complete multicut problem instance is created at $4$ times downsampled resolution w.r.t.\ the input resolution. 
-In total there are $1631$ problem instances\footnote{\url{https://keeper.mpdl.mpg.de/f/e5c3a48377a34561991d/?dl=1}} computed by~\cite{aabbas23_clusterfug}. The largest problem instance contains around $43k$ nodes. All instances use $\alpha = 0.4$.
+for instance segmentation on the Cityscapes validation set~\cite{cordts2016cityscapes}.
+For each \textit{thing} class a separate complete multicut problem instance is created at $4$ times downsampled resolution w.r.t.\ the input resolution. 
+In total there are $1631$ problem instances\footnote{\url{https://keeper.mpdl.mpg.de/f/e5c3a48377a34561991d/?dl=1}} from~\cite{aabbas23_clusterfug}.
+The largest problem instance contains around $43k$ nodes. All instances use $\alpha = 0.4$.
 \subsection{Algorithms}
 For solving the complete multicut problem all algorithms from Section~\ref{sec:multicut} are applicable but can be inefficient for large problems. 
 \begin{description}
-\item[ClusterFuG~\cite{aabbas23_clusterfug}:] Multiple algorithms based on edge contraction similar to GAEC algorithm for multicut~\cite{keuper2015efficient}. The algorithms make use of nearest neighbour techniques and factorized edge costs structure for efficiency.
+\item[ClusterFuG~\cite{aabbas23_clusterfug}:] Multiple algorithms based on edge contraction similar to GAEC algorithm for multicut~\cite{keuper2015efficient}.
+    The algorithms make use of nearest neighbour techniques and factorized edge costs structure for efficiency.
 \end{description}

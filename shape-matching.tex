@@ -177,6 +177,9 @@ The dataset contains $75$ ILP files consisting of problems with $200,000$ binary
 The dataset contains matching problems between complete shapes and partial shapes and shapes with equal triangulation. Partial shapes are shapes which are missing parts of the original shape (such files are denoted with \texttt{\_partial}). Additionally, there are matching problems which are between non-isometric deformed shapes e.g. a cat matched with a dog (such files are denoted with \texttt{\_noniso}).
 \\
 The original shapes are not included.
+\subsubsection[Deep Learning Predictor Energies]{Deep Learning Predictor Energies~\footnote{\url{https://keeper.mpdl.mpg.de/f/3988e4dd09ce48438a79/?dl=1}}}
+A subset of shape matching problems (LP-files) containing in total $167$ ILP files consisting of problems with $100$ up to $900$ triangles in increments of $100$. This translates to $200,000$ up to $14,000,000$ binary variables.
+Shape pairs for matching are taken from FAUST\_r~\cite{ren2018continuous,donati2020deep}, SMAL~\cite{zuffi20173d}, SHREC’20~\cite{dyke2020track} and DT4D-H~\cite{magnet2022smooth}. The energies are computed as in~\cite{roetzer2023fast} using the shape descriptors from~\cite{cao2023unsupervised}.
 
 \subsection{Algorithms}
 \begin{description}	
@@ -184,4 +187,7 @@ The original shapes are not included.
 	LP relaxation of~\eqref{eq:shape-matching-opt} is solved with CPLEX~\cite{cplex} and franctional variables are incrementally fixed towards $\{0,1\}$-values they are close to.
 	\item[Eckstein-Bertsekas~\cite{windheuser2011large}:]
 	A GPU implementation of the parallelizable primal-dual algorithm proposed by Eckstein and Bertsekas~\cite{eckstein1990alternating}.
+\item[SMcomb~\cite{roetzer2022scalable}:] Shape matchings are constructed by iterative fixing + propagation and backtracking algorithm using dual information computed by~\cite{lange2021efficient} as variable guidance.
+    \item[FastDOG-LBFGS + Constraint Splitting~\cite{roetzer2023fast}:]
+        LP relaxation is solved with an extension of the GPU solver~\cite{abbas2022fastdog} that incorporates LBFGS for faster convergence and splitting long constraints into shorter ones for faster iterations. Rounding is performed with incremental perturbation until the dual produces a consistent primal solution as in~\cite{abbas2022fastdog}.
 \end{description}

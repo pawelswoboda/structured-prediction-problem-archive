@@ -355,9 +355,11 @@ year = {2017}
 }
 
 @article{abbas2021combinatorial,
-  title={Combinatorial Optimization for Panoptic Segmentation: An End-to-End Trainable Approach},
+  title={Combinatorial optimization for panoptic segmentation: A fully differentiable approach},
   author={Abbas, Ahmed and Swoboda, Paul},
-  journal={arXiv preprint arXiv:2106.03188},
+  journal={Advances in Neural Information Processing Systems},
+  volume={34},
+  pages={15635--15649},
   year={2021}
 }
 
@@ -512,11 +514,12 @@ year = {2017}
   publisher={IEEE}
 }
 
-@article{bailoni2019generalized,
-  title={A generalized framework for agglomerative clustering of signed graphs applied to instance segmentation},
-  author={Bailoni, Alberto and Pape, Constantin and Wolf, Steffen and Beier, Thorsten and Kreshuk, Anna and Hamprecht, Fred A},
-  journal={arXiv preprint arXiv:1906.11713},
-  year={2019}
+@inproceedings{bailoni2022generalized,
+  title={GASP, a generalized framework for agglomerative clustering of signed graphs and its application to Instance Segmentation},
+  author={Bailoni, Alberto and Pape, Constantin and H{\"u}tsch, Nathan and Wolf, Steffen and Beier, Thorsten and Kreshuk, Anna and Hamprecht, Fred A},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={11645--11655},
+  year={2022}
 }
 
 @article{auer2012graph,
@@ -609,11 +612,11 @@ url = "http://thrust.github.io/", note = "Version 1.7.0"
 }
 
 @inproceedings{hutschenreiter2021fusion,
-  title={Fusion Moves for Graph Matching},
+  title={Fusion moves for graph matching},
   author={Hutschenreiter, Lisa and Haller, Stefan and Feineis, Lorenz and Rother, Carsten and Kainm{\"u}ller, Dagmar and Savchynskyy, Bogdan},
-  journal={arXiv preprint arXiv:2101.12085},
-  year = {2021},
-  booktitle = {ICCV}
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={6270--6279},
+  year={2021}
 }
   
 @inproceedings{alhaija2015graphflow,
@@ -1095,11 +1098,12 @@ url = "http://thrust.github.io/", note = "Version 1.7.0"
   year={2012}
 }
 
-@article{abbas2021fastdog,
-  title={FastDOG: Fast Discrete Optimization on GPU},
+@inproceedings{abbas2022fastdog,
+  title={FastDOG: Fast discrete optimization on GPU},
   author={Abbas, Ahmed and Swoboda, Paul},
-  journal={arXiv preprint arXiv:2111.10270},
-  year={2021}
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={439--449},
+  year={2022}
 }
 
 @article{szeliski2008comparative,
@@ -1506,9 +1510,87 @@ year={2009},
 organization={Ieee}
 }
 
-@article{aabbas23_clusterfug,
-  title = {{ClusterFuG: Clustering Fully connected Graphs by Multicut}},
-  author={Abbas, Ahmed and Swoboda, Paul},
-  journal={arXiv preprint arXiv:2301.12159},
-  year={2023}
+@inproceedings{aabbas23_clusterfug,
+  author       = {Ahmed Abbas and Paul Swoboda},
+  title        = {ClusterFuG: Clustering Fully connected Graphs by Multicut},
+  booktitle    = {International Conference on Machine Learning, {ICML} 2023, 23-29 July
+                  2023, Honolulu, Hawaii, {USA}},
+  series       = {Proceedings of Machine Learning Research},
+  volume       = {202},
+  year         = {2023},
+}
+
+@article{savchynskyy2019discrete,
+  title={Discrete graphical models—an optimization perspective},
+  author={Savchynskyy, Bogdan and others},
+  journal={Foundations and Trends{\textregistered} in Computer Graphics and Vision},
+  volume={11},
+  number={3-4},
+  pages={160--429},
+  year={2019},
+  publisher={Now Publishers, Inc.}
+}
+
+@article{cao2023unsupervised,
+  title={Unsupervised Learning of Robust Spectral Shape Matching},
+  author={Cao, Dongliang and Roetzer, Paul and Bernard, Florian},
+  journal={ACM Transactions on Graphics (TOG)},
+  year={2023},
+  publisher={ACM New York, NY}
+}
+
+@inproceedings{roetzer2022scalable,
+  title={A scalable combinatorial solver for elastic geometrically consistent 3d shape matching},
+  author={Roetzer, Paul and Swoboda, Paul and Cremers, Daniel and Bernard, Florian},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={428--438},
+  year={2022}
+}
+
+@article{ren2018continuous,
+  title={Continuous and orientation-preserving correspondences via functional maps},
+  author={Ren, Jing and Poulenard, Adrien and Wonka, Peter and Ovsjanikov, Maks},
+  journal={ACM Transactions on Graphics (ToG)},
+  volume={37},
+  pages={1--16},
+  year={2018},
+  publisher={ACM New York, NY, USA}
+}
+    
+@inproceedings{donati2020deep,
+  title={Deep geometric functional maps: Robust feature learning for shape correspondence},
+  author={Donati, Nicolas and Sharma, Abhishek and Ovsjanikov, Maks},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={8592--8601},
+  year={2020}
+}
+
+@inproceedings{zuffi20173d,
+  title={3D menagerie: Modeling the 3D shape and pose of animals},
+  author={Zuffi, Silvia and Kanazawa, Angjoo and Jacobs, David W and Black, Michael J},
+  booktitle={CVPR},
+  year={2017}
+}
+
+@article{dyke2020track,
+ journal = {Computers \& Graphics},
+ title = {{SHREC'20}: Shape correspondence with non-isometric deformations},
+ author = {Roberto M. Dyke and Yu-Kun Lai and Paul L. Rosin and Stefano Zappal{\`a} and Seana Dykes and Daoliang Guo and Kun Li and Riccardo Marin and Simone Melzi and Jingyu Yang},
+ volume = {92},
+ pages = {28-43},
+ year = {2020}
+}
+
+@inproceedings{magnet2022smooth,
+  title={Smooth non-rigid shape matching via effective Dirichlet energy optimization},
+  author={Magnet, Robin and Ren, Jing and Sorkine-Hornung, Olga and Ovsjanikov, Maks},
+  booktitle={International Conference on 3D Vision (3DV)},
+  year={2022}
+}
+
+@article{roetzer2023fast,
+      title={Fast Discrete Optimisation for Geometrically Consistent 3D Shape Matching}, 
+      author={Paul Roetzer and Ahmed Abbas and Dongliang Cao and Florian Bernard and Paul Swoboda},
+      journal={arXiv preprint arXiv:2310.08230},
+      year={2023},
 }

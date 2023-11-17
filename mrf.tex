@@ -128,6 +128,7 @@ We do not provide ILP-files in the format of Section~\ref{sec:ilp-file-format} d
 \subsection{Algorithms}
 \begin{description}[style=unboxed]
 \item[OpenGM~\cite{kappes2015comparative}:] Library of $\sim$ 50 different algorithms for inference in MRFs.
+\item[Optimization Monograph for MRFs~\cite{savchynskyy2019discrete}] Monograph on optimization techniques (Lagrange decomposition, message passing, subgradient methods, max-flow) for MRFs.
 \item[Tree-reweigthed sequential message passing (TRW-S)~\cite{kolmogorov2005convergent}:] Decompose the graph into chains and sequentially visit nodes and perform min-marginal averaging reusing previous computations. A lower bound is monotonically increasing. Rounding is performed by sequentially fixing visited variables to their locally best label.
 \item[Sequential Reweighted Message Passing Revisited (SRMP)~\cite{kolmogorov2014new}:] Extension of TRW-S~\cite{kolmogorov2005convergent} to higher order MRFs.
 \item[Boykov-Kolmogorov max-flow~\cite{boykov2004experimental}:] Convert $2$-label MRFs with submodular potentials to max-flow problems and solve them with an efficient combinatorial max-flow solver.

@@ -18,7 +18,7 @@
 \usepackage{listings} %code extracts
 \usepackage{xcolor}
 \usepackage{mdframed} %nice frames
-\usepackage{hyperref}
+\usepackage[pagebackref=true]{hyperref}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{tikz}
@@ -80,12 +80,13 @@ backgroundcolor=\color{light-gray}
 
 \title{Structured Prediction Problem Archive}
 
-\author{Paul Swoboda$^\dagger$, Andrea Hornakova$^\dagger$, Paul Roetzer$^{\ddagger,\star}$, Bogdan Savchynskyy$^{\diamond}$, Ahmed Abbas$^\dagger$}
+\author{Paul Swoboda$^{\dagger,\ddagger}$, Ahmed Abbas$^\ddagger$, Florian Bernard$^{\star}$, Andrea Hornakova$^\ddagger$, Paul Roetzer$^{\star}$,\\
+Bogdan Savchynskyy$^{\diamond}$}
 \date{%
-$^\dagger$MPI for Informatics, %
-$^\ddagger$TU Munich, %
-$^\star$University of Bonn, %
-$^\diamond$Heidelberg University %
+$^\dagger$Heinrich-Heine~Universit\"at~D\"usseldorf, %
+$^\ddagger$MPI~for~Informatics,~Saarbr\"ucken, %
+$^\star$University~of~Bonn, %
+$^\diamond$Heidelberg~University %
 }
 
 \begin{document}
@@ -97,7 +98,7 @@ In order to facilitate algorithm development for their numerical solution, we co
 We provide archival links to datasets, description of the considered problems and problem formats, and a short summary of problem characteristics including size, number of instances etc.
 For reference we also give a non-exhaustive selection of algorithms proposed in the literature for their solution.
 We hope that this central repository will make benchmarking and comparison to established works easier.
-    We welcome submission of interesting new datasets and algorithms for inclusion in our archive\footnote{Corresponding email address \href{mailto:pswoboda@mpi-inf.mpg.de}{pswoboda@mpi-inf.mpg.de}}.
+    We welcome submission of interesting new datasets and algorithms for inclusion in our archive\footnote{Corresponding email address \href{mailto:paul.swoboda@hhu.de}{paul.swoboda@hhu.de}}.
 \end{abstract}
 
 \tableofcontents
