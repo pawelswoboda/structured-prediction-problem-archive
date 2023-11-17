@@ -80,20 +80,20 @@ The OpenGM benchmark~\cite{kappes2015comparative} contains instances of the mult
 These instances are stored in a more general graphical model format. 
 For convenience we provide these instances here in the multicut file format as described above.
 
-\paragraph{Natural image segmentation\footnote{\url{TODO}}}
+\paragraph{Natural image segmentation\footnote{\url{https://keeper.mpdl.mpg.de/f/7af922a52a354896a5d7/?dl=1}}}
 Instances of the multicut problem are constructed from natural images from the Berkley segmentation dataset~\cite{MartinFTM01} as described in~\cite{andres2011closedness}. 
 First, superpixels are computed by a watershed over-segmentation and a graph is constructed with one node for each superpixel and edges between adjacent superpixels.
 Then, edge costs are estimated by a random forest that is trained on manually annotated data.
 There are 100 instances with $156-3764$ nodes and  $439-10970$ edges.
 
-\paragraph*{Knott3D\footnote{\url{TODO}}}
+\paragraph*{Knott3D\footnote{\url{https://keeper.mpdl.mpg.de/f/822134874a8f4c2aa0a9/?dl=1}}}
 Instance of the multicut problem are constructed from volume images of an adult mouse somatosensory cortex, acquired by~\cite{knott2008serial}, as described in~\cite{andres2012globally}.
 For this, superpixel graphs are computed with a combination of a random forest trained on manually annotated data and a watershed over-segmentation.
 Edge costs are also estimated by a random forest.
 There are three types of instances corresponding to different volume sizes.
 In total there are 24 instances with $571-17073$ nodes and $3381-107060$ edges.
 
-\paragraph*{Modularity clustering\footnote{\url{TODO}}}
+\paragraph*{Modularity clustering\footnote{\url{https://keeper.mpdl.mpg.de/f/33bb96c32ae04395a1e7/?dl=1}}}
 Modularity is a measure for quality of a clustering of the nodes of an undirected graph.
 Modularity clustering is the problem of finding a clustering of maximal modularity.
 The modularity clustering problem can be formulated as a multicut problem on a complete graph~\cite{brandes2008modularity}.
@@ -101,12 +101,11 @@ The OpenGM benchmark contains instances of the modularity clustering problem for
 The sources of these six graphs as well as additional instances of the modularity clustering problem can be found in~\cite{cafieri2011locally}.
 The six instances contain $34-115$ nodes and $561-6555$.
 
-\subsubsection[Bird sound clustering]{Bird sound clustering\footnote{\url{TODO}}}
+\subsubsection[Bird sound clustering]{Bird sound clustering\footnote{\url{https://keeper.mpdl.mpg.de/f/4803b50f0ab14e75b01c/?dl=1}}}
 A Siamese network is trained by~\cite{stein2023correlation} to estimate wether the same species of bird can be heard in two different sound recordings.
 Based on these estimates a multicut problem on the complete graph is solved to cluster sound recordings.
 The names of the instances in this dataset indicate different settings: ``2s''/``3s'' indicates whether the data points are 2 or 3 second chunks of bird sound recordings; ``small''/``big'' indicates whether the dataset with 23 or 68 species is used; ``with-augments''/``no-augments'' indicates whether data augmentation is used for training; the rest of the file name indicates the underlying dataset as described in~\cite{stein2023correlation}.
 In total there are $30$ instance with $3326-22252$ nodes and $5529475-247564626$ edges.
-
 
 
 \subsection{Algorithms}
